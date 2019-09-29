@@ -111,9 +111,8 @@ def challenge_6():
 
 
 def challenge_7():
-    '''WRONG SOLUTION'''
-    primes_found = [1, 2, 3]
-    index = 0
+    primes_found = [2, 3]
+    index = 1
     while True:
         value = prime_superset(index)
         is_value_prime = is_prime(value)
