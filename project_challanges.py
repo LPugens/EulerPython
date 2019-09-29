@@ -147,3 +147,13 @@ def challenge_8():
             max_window = window_digits
 
     return max_mul, max_window
+
+
+def challenge_9():
+    numbers = list(range(1, 1000))
+    for a in numbers:
+        for b in numbers:
+            for c in numbers:
+                if a+b+c == 1000:
+                    if a**2 + b**2 == c**2:
+                        return a*b*c
