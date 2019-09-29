@@ -4,6 +4,22 @@ from math import floor
 from typing import List
 
 
+def prime_superset(index):
+    """Will generate a subset of the I set, while being an superset of the prime numbers"""
+    return 1 + (index << 2) - ((index >> 1) << 1)
+
+
+def prime_decompose(number: int) -> List[int]:
+
+    max_quotient = floor(sqrt(number).real)
+    d = 1
+    q = number % 2 == 0 and 2 or 3
+    while q <= max_quotient and number % q != 0:
+        q = prime_superset(d)
+        d += 1
+    return q <= max_quotient and [q] + prime_decompose(number // q) or [number]
+
+
 def challenge_1():
     multiples = [i for i in range(1000) if i % 5 == 0 or i % 3 == 0]
 
@@ -25,7 +41,6 @@ def challenge_2():
 
 def is_prime(val):
     i = 2
-    # for i in range(1, val):
     while True:
         if val % i == 0:
             return False
@@ -38,18 +53,9 @@ def is_prime(val):
 
 
 def challenge_3():
-    NUMBER = 60085147
-    i = 1
-    max_prime = None
-
-    while True:
-
-        if NUMBER % i == 0 and is_prime(i):
-            max_prime = i
-
-        i += 1
-        if i >= NUMBER - 1:
-            break
+    number = 600851475143
+    prime_factors = prime_decompose(number)
+    max_prime = max(prime_factors)
 
     return max_prime
 
@@ -67,29 +73,18 @@ def is_palindrome(number: int) -> bool:
 
 
 def challenge_4():
-    three_digit_numbers = range(1000, 100, -1)
+    three_digit_numbers = range(999, 99, -1)
+
+    maximum_palindrome = -1
 
     for three_digit_number_i in three_digit_numbers:
         for three_digit_number_j in three_digit_numbers:
             multiplied = three_digit_number_i * three_digit_number_j
             if is_palindrome(multiplied):
-                return multiplied
+                if multiplied > maximum_palindrome:
+                    maximum_palindrome = multiplied
 
-
-def prime_superset(index):
-    """Will generate a subset of the I set, while being an superset of the prime numbers"""
-    return 1 + (index << 2) - ((index >> 1) << 1)
-
-
-def prime_decompose(number: int) -> List[int]:
-
-    max_quotient = floor(sqrt(number).real)
-    d = 1
-    q = number % 2 == 0 and 2 or 3
-    while q <= max_quotient and number % q != 0:
-        q = prime_superset(d)
-        d += 1
-    return q <= max_quotient and [q] + prime_decompose(number // q) or [number]
+    return maximum_palindrome
 
 
 def challenge_5():
@@ -116,7 +111,8 @@ def challenge_6():
 
 
 def challenge_7():
-    primes_found = [2, 3]
+    '''WRONG SOLUTION'''
+    primes_found = [1, 2, 3]
     index = 0
     while True:
         value = prime_superset(index)
