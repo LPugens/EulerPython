@@ -76,16 +76,18 @@ def challenge_4():
                 return multiplied
 
 
+def prime_superset(index):
+    """Will generate a subset of the I set, while being an superset of the prime numbers"""
+    return 1 + (index << 2) - ((index >> 1) << 1)
+
+
 def prime_decompose(number: int) -> List[int]:
-    def step(index):
-        """Will generate a subset of the I set, while being an superset of the prime numbers"""
-        return 1 + (index << 2) - ((index >> 1) << 1)
 
     max_quotient = floor(sqrt(number).real)
     d = 1
     q = number % 2 == 0 and 2 or 3
     while q <= max_quotient and number % q != 0:
-        q = step(d)
+        q = prime_superset(d)
         d += 1
     return q <= max_quotient and [q] + prime_decompose(number // q) or [number]
 
@@ -111,3 +113,16 @@ def challenge_6():
     square_of_sums = sum(values)**2
 
     return square_of_sums - sum_of_squares
+
+
+def challenge_7():
+    primes_found = [2, 3]
+    index = 0
+    while True:
+        value = prime_superset(index)
+        is_value_prime = is_prime(value)
+        if is_value_prime:
+            primes_found += [value]
+            if len(primes_found) == 10001:
+                return value
+        index += 1
