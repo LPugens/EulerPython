@@ -1,3 +1,8 @@
+from cmath import sqrt
+from functools import reduce
+from math import floor
+from typing import List
+
 
 def challenge_1():
     multiples = [i for i in range(1000) if i % 5 == 0 or i % 3 == 0]
@@ -26,7 +31,7 @@ def is_prime(val):
             return False
 
         i += 1
-        if i >= val-1:
+        if i >= val - 1:
             break
 
     return True
@@ -43,7 +48,7 @@ def challenge_3():
             max_prime = i
 
         i += 1
-        if i >= NUMBER-1:
+        if i >= NUMBER - 1:
             break
 
     return max_prime
@@ -70,4 +75,31 @@ def challenge_4():
             if is_palindrome(multiplied):
                 return multiplied
 
-    return None
+
+def prime_decompose(number: int) -> List[int]:
+    def step(index):
+        """Will generate a subset of the I set, while being an superset of the prime numbers"""
+        return 1 + (index << 2) - ((index >> 1) << 1)
+
+    max_quotient = floor(sqrt(number).real)
+    d = 1
+    q = number % 2 == 0 and 2 or 3
+    while q <= max_quotient and number % q != 0:
+        q = step(d)
+        d += 1
+    return q <= max_quotient and [q] + prime_decompose(number // q) or [number]
+
+
+def challenge_5():
+    one_to_twenty = range(1, 21)
+    decompositions = [prime_decompose(val) for val in one_to_twenty]
+
+    max_val = max(sum(decompositions, []))
+    factors = []
+    for i in range(max_val + 1):
+        factors += [max([decomposition.count(i) for decomposition in decompositions])]
+        i += 1
+
+    result = reduce(lambda x, y: x * y, [i ** fac for i, fac in enumerate(factors)])
+
+    return result
