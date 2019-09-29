@@ -103,3 +103,11 @@ def challenge_5():
     result = reduce(lambda x, y: x * y, [i ** fac for i, fac in enumerate(factors)])
 
     return result
+
+
+def challenge_6():
+    values = range(1, 101)
+    sum_of_squares = sum([val**2 for val in values])
+    square_of_sums = sum(values)**2
+
+    return square_of_sums - sum_of_squares
