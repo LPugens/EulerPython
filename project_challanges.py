@@ -157,3 +157,16 @@ def challenge_9():
                 if a+b+c == 1000:
                     if a**2 + b**2 == c**2:
                         return a*b*c
+
+
+def challenge_10():
+    primes_found = [2, 3]
+    index = 1
+    while True:
+        value = prime_superset(index)
+        is_value_prime = len(prime_decompose(value)) == 1
+        if is_value_prime:
+            if value >= 2000000:
+                return reduce(lambda x, y: x+y, primes_found)
+            primes_found += [value]
+        index += 1
