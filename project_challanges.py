@@ -356,5 +356,37 @@ def challenge_13():
     return str(sum(values))[:10]
 
 
+def next_collatz(val):
+    if val % 2 == 0:
+        return val/2
+    else:
+        return 3*val + 1
+
+
+def challenge_14():
+    visited_values = set()
+    values_history = {}
+    for i in range(1, 1000000):
+        chain_length = 1
+        val = i
+        while val != 1:
+            val = next_collatz(val)
+            if val in visited_values:
+                chain_length += values_history[val]
+                break
+            chain_length += 1
+        visited_values.add(i)
+        values_history[i] = chain_length
+
+    max_chain = -1
+    max_starting = None
+    for i in values_history.keys():
+        if values_history[i] > max_chain:
+            max_chain = values_history[i]
+            max_starting = i
+            
+    return max_starting
+
+
 if __name__ == '__main__':
-    print(f'result: {challenge_13()}')
+    print(f'result: {challenge_14()}')
