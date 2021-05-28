@@ -227,31 +227,25 @@ def challenge_11():
     return max_val
 
 
-def count_divisors(val, data, values):
-    count = 1
-
-    for i in range(1, int(val/2), 2):
-        if val % i == 0:
-            print(f' - {i}')
-            count += 1
-
-    return count
+def count_divisors(n):
+    return len(
+        set(
+            reduce(
+                list.__add__,
+                ([i, n // i] for i in range(1, int(n ** 0.5) + 1) if n % i == 0)
+            )
+        )
+    )
 
 
 def challenge_12():
-    data = {}
-    values = set()
-
     count = 1
     while True:
         value = sum(range(1, count+1))
-        print(value)
         divisions = count_divisors(value)
         if divisions > 500:
             return value
 
-        values.add(value)
-        data[value] = divisions
         count += 1
 
 
