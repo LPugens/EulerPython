@@ -402,5 +402,17 @@ def challenge_15():
     return int(fac(n) / (fac(k) * fac(n-k)))
 
 
+def challenge_16():
+    number = 2**1000
+
+    number = str(number)
+
+    acc = 0
+    for ch in number:
+        acc += int(ch)
+
+    return acc
+
+
 if __name__ == '__main__':
-    print(f'result: {challenge_15()}')
+    print(f'result: {challenge_16()}')
