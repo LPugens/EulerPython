@@ -414,5 +414,85 @@ def challenge_16():
     return acc
 
 
+def spell_number(number):
+    special = {
+        '10': 'ten',
+        '11': 'eleven',
+        '12': 'twelve',
+        '13': 'thirteen',
+        '14': 'fourteen',
+        '15': 'fifteen',
+        '16': 'sixteen',
+        '17': 'seventeen',
+        '18': 'eighteen',
+        '19': 'nineteen'
+    }
+
+    str_number = ''.join(list(reversed(str(number))))
+
+    result = ''
+
+    digits = {
+        '0': '',
+        '1': 'one',
+        '2': 'two',
+        '3': 'three',
+        '4': 'four',
+        '5': 'five',
+        '6': 'six',
+        '7': 'seven',
+        '8': 'eight',
+        '9': 'nine'
+    }
+
+    tens = {
+        '0': '',
+        '1': 'teen',
+        '2': 'twenty',
+        '3': 'thirty',
+        '4': 'forty',
+        '5': 'fifty',
+        '6': 'sixty',
+        '7': 'seventy',
+        '8': 'eighty',
+        '9': 'ninety'
+    }
+
+    first_decimal = str(number)[-2:]
+    if first_decimal in special:
+        result = special[first_decimal]
+        special = True
+    else:
+        special = False
+
+    for pos, ch in enumerate(str_number):
+        if pos == 0 and not special:
+            result += digits[ch]
+        elif pos == 1 and not special:
+            if ch == '1':
+                result += tens['1']
+            else:
+                result = tens[ch] + result
+        elif pos == 2:
+            if number % 100 != 0:
+                result = 'and' + result
+            if ch != '0':
+                result = digits[ch] + 'hundred' + result
+        elif pos == 3:
+            if ch != '0':
+                result = digits[ch] + 'thousand' + result
+
+    return result
+
+
+def challenge_17():
+    length = 0
+    for i in range(1, 10001):
+        spelled = spell_number(i)
+        length += len(spelled)
+
+    return length
+
+
 if __name__ == '__main__':
-    print(f'result: {challenge_16()}')
+    print(f'result: {challenge_17()}')
