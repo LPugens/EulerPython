@@ -574,5 +574,11 @@ def challenge_19():
     return count
 
 
+def challenge_20():
+    number = math.factorial(100)
+    result = sum([int(i) for i in str(number)])
+    return result
+
+
 if __name__ == '__main__':
-    print(f'result: {challenge_19()}')
+    print(f'result: {challenge_20()}')
