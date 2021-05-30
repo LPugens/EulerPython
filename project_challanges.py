@@ -1,3 +1,4 @@
+import math
 from cmath import sqrt
 from functools import reduce
 from math import floor
@@ -384,9 +385,22 @@ def challenge_14():
         if values_history[i] > max_chain:
             max_chain = values_history[i]
             max_starting = i
-            
+
     return max_starting
 
 
+def challenge_15():
+    grid_size = 20
+
+    path_length = grid_size * 2
+
+    k = path_length / 2
+    n = path_length
+
+    fac = math.factorial
+
+    return int(fac(n) / (fac(k) * fac(n-k)))
+
+
 if __name__ == '__main__':
-    print(f'result: {challenge_14()}')
+    print(f'result: {challenge_15()}')
