@@ -538,5 +538,41 @@ def challenge_18():
     return max(totals[-1])
 
 
+def days_in_month(month, year):
+    if month == 1 and year % 4 == 0 and (year % 100 != 0 or year % 400 == 0):
+        return 29
+
+    months = {
+        0: 31,
+        1: 28,
+        2: 31,
+        3: 30,
+        4: 31,
+        5: 30,
+        6: 31,
+        7: 31,
+        8: 30,
+        9: 31,
+        10: 30,
+        11: 31
+    }
+    return months[month]
+
+
+def challenge_19():
+    count = 0
+    current_day = 1
+    for year in range(1900, 2001):
+        if year == 1901:
+            count = 0
+        for month in range(12):
+            for day_of_month in range(days_in_month(month, year)):
+                if day_of_month == 0 and current_day == 0:
+                    count += 1
+                current_day = (current_day + 1) % 7
+
+    return count
+
+
 if __name__ == '__main__':
-    print(f'result: {challenge_18()}')
+    print(f'result: {challenge_19()}')
